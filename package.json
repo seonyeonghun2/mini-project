@@ -1,0 +1,26 @@
+{
+  "name": "mini-project",
+  "version": "1.0.0",
+  "description": "프런트엔드 개발자 과정 미니프로젝 - 회원관리프로그램",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client:install": "npm install --workspace=client",
+    "client:dev": "npm run dev --workspace=client",
+    "client:build": "npm run build --workspace=client",
+    "server:dev": "npm run start --workspace=server"
+  },
+  "author": "seonyeonghun",
+  "license": "MIT",
+  "workspaces": [
+    "packages/server",
+    "packages/client"
+  ],
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.13.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
