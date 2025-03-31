@@ -5,7 +5,9 @@ const connect = () => {
   if (process.env.NODE_ENV !== 'production') {
     mongoose.set('debug', true)
   }
-  mongoose.connect(process.env.DB_URI)
+  mongoose.connect(process.env.DB_URI, {
+    authSource: 'admin'
+  })
   .then(() => console.log("Mongodb is connected!"))
   .catch((err) => console.log(err))
 }
