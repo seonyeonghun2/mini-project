@@ -16,6 +16,10 @@ const regist = async (req, res) => {
     // 아니라면(=없다면) 새 회원을 생성(=등록)
     const user = new User(req.body);
     await user.save()
+
+    res.status(201).json({
+      message: '신규 사용자가 등록되었습니다' 
+    })
   } catch (err) {
     console.log("resit is failed : ", err)
   }
