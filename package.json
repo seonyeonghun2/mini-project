@@ -16,9 +16,13 @@
     "packages/client"
   ],
   "dependencies": {
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "mongoose": "^8.13.0"
+    "mongoose": "^8.13.0",
+    "react-bootstrap": "^2.10.9",
+    "react-router": "^7.4.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
