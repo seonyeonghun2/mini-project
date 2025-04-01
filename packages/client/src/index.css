@@ -64,3 +64,14 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* custom css */
+/* bootstrap 사용시, 우선순위 문제를 해결하고자 !important를 제한적으로 사용 */
+ul {
+  list-style: none;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.logo {
+  flex: 0 0 108px !important
+}
