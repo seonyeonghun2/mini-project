@@ -6,7 +6,7 @@ import siteLogo from '../assets/site-logo.png'
 import { NavLink } from 'react-router'
 const SiteHeader = () => {
     const handleClick = () => {
-        alert('회원가입화면으로 이동합니다')
+        location.href='/signup'
     }
   return (
     <header className='py-3'>
@@ -21,6 +21,7 @@ const SiteHeader = () => {
                             <li><NavLink to='/'>Home</NavLink></li>
                             <li><NavLink to='/about'>about</NavLink></li>
                             <li><NavLink to='/board'>community</NavLink></li>
+                            <li><NavLink to='/signin'>로그인</NavLink></li>
                         </ul>
                     </nav>
                     <Button onClick={handleClick}>Register Now <i className="bi bi-arrow-right"></i></Button>
