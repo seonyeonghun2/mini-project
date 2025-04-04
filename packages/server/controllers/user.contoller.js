@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import bcrypt from 'bcrypt'
 const regist = async (req, res) => {
   const { username, password, email, phone, sns } = req.body;
   try {
@@ -13,7 +14,16 @@ const regist = async (req, res) => {
       })
     }
     
-    const user = new User(req.body);
+    // 방법1. User 컨트롤러에서 regist 요청처리시, 암호 해싱
+    let newUser = {
+      username,
+      email,
+      password: bcrypt.hashSync(password, 10),
+      phone,
+      sns
+    }
+
+    const user = new User(newUser);
     await user.save()
 
     res.status(201).json({
@@ -36,7 +46,7 @@ const login = async (req, res) => {
       })
     }
     // 있으면! 그 정보중에 password를 전송한 password랑 비교하고~    
-    const isMatch = password == user.password; // <-- undefined
+    const isMatch = bcrypt.compareSync(password, user.password); // true
 
     if (!isMatch) {
       return res.status(400).json({
@@ -48,6 +58,9 @@ const login = async (req, res) => {
       id: user._id
     }
     // 일치하면 로그인했다고 응답!
+    res.cookie('nexcent', userInfo, { httpOnly: false, secure: false, maxAge: 24 * 60 * 60 * 1000, path: '/'})    
+    // 브라우저에서 쿠키 응답이 확인이 되지 않는다면, 서버측에서 콘솔에 출력해서 확인
+    console.log(res.getHeaders()['set-cookie'])
     res.status(200).json({
       message: '로그인 성공!',
       data: userInfo
