@@ -28,12 +28,14 @@ function SignIn() {
 
     axios.post('http://localhost:3000/users/login', formData, {
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true
     }).then((response) => {
       if (response.status === 200) {
         alert('로그인 성공!, 첫페이지로 이동합니다')
         location.href = '/'
+        
       } else if (response.status === 400) {
         alert("아이디 또는 비밀번호를 다시 확인하세요")
       }
