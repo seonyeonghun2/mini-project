@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import bcrypt from 'bcrypt'
+//import bcrypt from 'bcrypt'
 const userSchema = mongoose.Schema({
     username: {
         type: String,
@@ -17,8 +17,8 @@ const userSchema = mongoose.Schema({
     phone: {
         type: String,
     },
-    sns: String
-})
+    sns: String    
+}, {timestamps: true})
 
 // 방법2. User 스키마 정의시 암호 해싱처리
 // userSchema.pre('save', async function(next) {
