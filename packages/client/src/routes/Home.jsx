@@ -4,13 +4,18 @@ import SiteHeader from '../layouts/SiteHeader'
 import SiteFooter from '../layouts/SiteFooter'
 import HomeCarousel from '../components/HomeCarousel'
 import { Outlet } from 'react-router'
+import { jwtDecode } from "jwt-decode";
 const Home = () => {
   const [userInfo, setUserInfo] = useState(null)
   useEffect(() => {
-    const cookie = Cookies.get('nexcent')
-    // console.log(cookie.split('\"')[3]) //관리자(username)
-    if(cookie) {
-      setUserInfo(cookie.split('\"')[3])
+    const token = Cookies.get('nexcent')
+    try {
+      if(token) {
+        const decodedToken = jwtDecode(token)
+        setUserInfo(decodedToken)
+      } 
+    } catch (err) {
+      console.error(err.message)
     }
   }, [])
   const handleLogOut = () => {
