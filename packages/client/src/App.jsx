@@ -4,7 +4,8 @@ import Home from './routes/Home'
 import About from './routes/About'
 import SignIn from './routes/SignIn'
 import SignUp from './routes/SignUp'
-import Board from './routes/Board'
+import Posts from './routes/Posts'
+import AddPost from './routes/AddPost'
 const App = () => {
   return (
     <>
@@ -13,8 +14,9 @@ const App = () => {
           <Route path='about' element={<About />} />
           <Route path='signup' element={<SignUp />} />
           <Route path='signin' element={<SignIn />} />
-          <Route path='board' element={<Board />} />
+          <Route path='posts' element={<Posts />} />
         </Route>
+        <Route path='/addPost' element={<AddPost />} />
       </Routes>
     </>
   )
