@@ -1,5 +1,7 @@
 import User from "../models/User.js";
 import bcrypt from 'bcrypt'
+import 'dotenv/config'
+import jwt from 'jsonwebtoken'
 const regist = async (req, res) => {
   const { username, password, email, phone, sns } = req.body;
   try {
@@ -57,8 +59,11 @@ const login = async (req, res) => {
       name: user.username,
       id: user._id
     }
-    // 일치하면 로그인했다고 응답!
-    res.cookie('nexcent', userInfo, { httpOnly: false, secure: false, maxAge: 24 * 60 * 60 * 1000, path: '/'})    
+    // 일치하면 로그인했다고 응답! --> 필요하면 jwt 토큰으로 정보를 해시(암호화)
+    // 실제 운영목적의 서버에서는, 보안상 expiresIn(토큰 만료시간) 옵션을 설정하는것을 권장
+    const token = jwt.sign(userInfo, process.env.JWT_SECRET);
+    console.log(token);
+    res.cookie('nexcent', token, { httpOnly: false, secure: false, maxAge: 24 * 60 * 60 * 1000, path: '/'})    
     // 브라우저에서 쿠키 응답이 확인이 되지 않는다면, 서버측에서 콘솔에 출력해서 확인
     console.log(res.getHeaders()['set-cookie'])
     res.status(200).json({
