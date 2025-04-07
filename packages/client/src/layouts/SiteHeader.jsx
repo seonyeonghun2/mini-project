@@ -13,7 +13,7 @@ const SiteHeader = ({ userInfo, handleLogOut }) => {
         <Container>
             <div className='w-100 text-end border-bottom py-2'>{ userInfo ? (
                 <>
-                    <span>{userInfo}님 로그인중</span> {" | "}
+                    <span>{userInfo.name}님 로그인중</span> {" | "}
                     <NavLink to='/modify'>정보수정</NavLink> {" "}
                     <NavLink onClick={handleLogOut}>로그아웃</NavLink>
                 </>
