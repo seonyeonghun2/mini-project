@@ -2,6 +2,22 @@ import User from "../models/User.js";
 import bcrypt from 'bcrypt'
 import 'dotenv/config'
 import jwt from 'jsonwebtoken'
+const getUserNameById = async (req, res) => {
+  try {
+    const findUserId = req.params.id
+    const foundUser = await User.findById(findUserId);
+    if (!foundUser) {
+      res.status(401).json({
+        message: '일치하는 회원정보가 없습니다'
+      })
+    }
+    res.status(200).json({
+      username: foundUser.username
+    })
+  } catch (err) {
+    res.status(500).json({ message: '일치하는 회원정보가 없습니다'})
+  }
+}
 const regist = async (req, res) => {
   const { username, password, email, phone, sns } = req.body;
   try {
@@ -78,4 +94,4 @@ const login = async (req, res) => {
   }
 }
 
-export default { regist, login }
+export default { regist, login, getUserNameById }
