@@ -34,7 +34,7 @@ const SiteHeader = ({ userInfo, handleLogOut }) => {
                         <ul className="d-flex gap-5 justify-content-between">
                             <li><NavLink to='/'>Home</NavLink></li>
                             <li><NavLink to='/about'>about</NavLink></li>
-                            <li><NavLink to='/board'>board</NavLink></li>
+                            <li><NavLink to='/posts'>posts</NavLink></li>
                         </ul>
                     </nav>
                 </Col>
