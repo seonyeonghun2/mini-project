@@ -1,30 +1,30 @@
 import { Container, Carousel } from 'react-bootstrap'
-import HomeImage from '../assets/home-section.png'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import CarouselItemImage from './CarouselItemImage';
 function HomeCarousel() {
   return (
     <Container className='my-3 px-0' fluid>
-      <Carousel>
+      <Carousel fade>
         <Carousel.Item>
-          <img src={HomeImage} alt="home" className='w-100 img-fluid' />
+          <CarouselItemImage src="https://picsum.photos/id/1000/1920/400" text="picsum" />
           <Carousel.Caption>
-            <h3>First slide label</h3>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+            <h3>Nexcent</h3>
+            <p>ERP 전문가 그룹이 아름다운 세상을 만들어갑니다!</p>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
-        <img src={HomeImage} alt="home" className='w-100 img-fluid' />
+        <CarouselItemImage src="https://picsum.photos/id/1001/1920/400" text="picsum" />
           <Carousel.Caption>
-            <h3>Second slide label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <h3>Nex ERP</h3>
+            <p>Nex ERP 새로운 버전이 출시되었습니다!</p>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
-        <img src={HomeImage} alt="home" className='w-100 img-fluid' />
+        <CarouselItemImage src="https://picsum.photos/id/1002/1920/400" text="picsum" />
           <Carousel.Caption>
-            <h3>Third slide label</h3>
+            <h3>Nex CRM</h3>
             <p>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+              새로운 CRM 도입으로 당신의 기업가치를 향상시키세요!
             </p>
           </Carousel.Caption>
         </Carousel.Item>
