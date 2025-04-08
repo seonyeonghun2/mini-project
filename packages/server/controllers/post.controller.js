@@ -49,7 +49,7 @@ export const readPosts = async (req, res) => {
 export const readPost = async (req, res) => {
     try {
         // .populte() : 마치 JOIN 연산처럼~
-        const post = await Post.findById(req.params.id).populate('author', 'username')
+        const post = await Post.findOne({uuid: req.params.id}).populate('author', 'username')
         if (!post) {
             return res.status(401).json({
                 message: '데이터가 존재하지 않습니다.'
@@ -64,13 +64,39 @@ export const readPost = async (req, res) => {
         })
     }
 }
-// export const updatePosts = () => {
-
-// }
-export const removePost = async (req, res) => {
-    console.log(req.method)
+export const updatePost = async (req, res) => {
+    const {title, content} = req.body
+    const uuid = req.params.id
     try {
-        const post = await Post.deleteOne({_id: req.params.id})
+        // Post 모델 : 스키마를 _id 가 아닌 uuid로 변경
+        const post = await Post.findOne({uuid}).populate('author', 'username')
+        console.log("update post : ", post)
+        if (!post) {
+            return res.status(401).json({
+                message: '데이터가 존재하지 않습니다.'
+            })
+        }
+        // 기존 post에 새 제목, 새 내용         
+        post.title = title
+        post.content = content;
+        await post.save()
+
+        res.status(201).json({
+            message: '업데이트 되었습니다',
+            data: post
+        })
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ 
+            status: 'fail', 
+            message: '데이터가 없거나 로드하는데 에러가 발생했습니다.' 
+        }) 
+    }
+}
+export const removePost = async (req, res) => {
+    // console.log(req.method)
+    try {
+        const post = await Post.deleteOne({uuid: req.params.id})
         if (!post) {
             return res.status(401).json({
                 message: '데이터가 존재하지 않습니다.'
