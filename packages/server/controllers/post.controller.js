@@ -67,10 +67,25 @@ export const readPost = async (req, res) => {
 export const updatePost = async (req, res) => {
     const {title, content} = req.body
     const uuid = req.params.id
+    const token = req.headers.authorization.split(' ')[1]
+    if (!token) {
+        return res.status(401).json({
+            message: '인증정보가 존재하지 않습니다.'
+        })
+    }
+    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    
     try {
         // Post 모델 : 스키마를 _id 가 아닌 uuid로 변경
         const post = await Post.findOne({uuid}).populate('author', 'username')
-        console.log("update post : ", post)
+        
+        if (decoded.name !== post.author.username) {
+            return res.status(401).json({
+                status: 'fail',
+                message: '글 수정 권한이 없습니다.'
+            })
+        }
+
         if (!post) {
             return res.status(401).json({
                 message: '데이터가 존재하지 않습니다.'
@@ -81,9 +96,12 @@ export const updatePost = async (req, res) => {
         post.content = content;
         await post.save()
 
+        const updatePost = await Post.findOne({uuid}).populate('author', 'username')
+        console.log('update된 글 : ', updatePost)
+        
         res.status(201).json({
             message: '업데이트 되었습니다',
-            data: post
+            data: updatePost
         })
     } catch (err) {
         console.error(err.message);
