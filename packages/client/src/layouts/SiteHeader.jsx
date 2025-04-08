@@ -32,9 +32,9 @@ const SiteHeader = ({ userInfo, handleLogOut }) => {
                 <Col className="d-flex align-items-center gap-3" md="8">
                     <nav className='w-100'>
                         <ul className="d-flex gap-5 justify-content-between">
-                            <li><NavLink to='/'>Home</NavLink></li>
-                            <li><NavLink to='/about'>about</NavLink></li>
-                            <li><NavLink to='/posts'>posts</NavLink></li>
+                            <li><NavLink to='/'>처음으로</NavLink></li>
+                            <li><NavLink to='/about'>회사소개</NavLink></li>
+                            <li><NavLink to='/posts'>커뮤니티</NavLink></li>
                         </ul>
                     </nav>
                 </Col>
