@@ -10,19 +10,14 @@ function ViewPost() {
   const [post, setPost] = useState(null)
   const [loading, setLoading] = useState(true)
   const [validated, setValidated] = useState(false)
-  const [formData, setFormData] = useState({
-    title: '',
-    content: '',
-    createdAt: ''
-  })
+  const [formData, setFormData] = useState({})
   const token = Cookies.get('nexcent')
   if (!token) {
     alert('인증 정보가 존재하지 않습니다')
     navigate('/signin')
   }
-
   useEffect(() => {
-    console.log(uuid.id)
+
     axios
       .get(`http://localhost:3000/api/posts/${uuid.id}`, {
         withCredentials: true,
@@ -33,10 +28,11 @@ function ViewPost() {
       .then((res) => {
         // console.log(res.data)
         setPost(res.data)
+        setFormData(res.data)
         setLoading(false)
       })
       .catch((err) => console.error(err.message))
-  }, [uuid.id])
+  }, [])
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -50,6 +46,7 @@ function ViewPost() {
       event.stopPropagation()
     }
     setValidated(true)
+    
     axios
       .put(`http://localhost:3000/api/posts/${uuid.id}`, formData, {
         withCredentials: true,
@@ -58,14 +55,15 @@ function ViewPost() {
         },
       })
       .then((res) => {
-        setPost(res.data)
-        console.log(res)
+        if (res.data.status === 'fail') {
+          alert('글 수정 권한이 없습니다')
+        }
+        //  setPost(res.data)
         setLoading(false)
+        //  navigate('/posts')
       })
       .catch((err) => console.error(err.message))
   }
-
-  // console.log(params); // _id가 아닌 uuid값
 
   function convertDate(date) {
     return new Date(date)
@@ -109,7 +107,7 @@ function ViewPost() {
                 <Form.Label>작성일</Form.Label>
                 <Form.Control
                   required
-                  type="date"
+                  type="text"
                   placeholder="created at"
                   disabled
                   defaultValue={convertDate(post.createdAt)}
@@ -120,7 +118,14 @@ function ViewPost() {
             <Col>
               <Form.Group as={Col} controlId="validationCustomAuthor">
                 <Form.Label>작성자</Form.Label>
-                <Form.Control type="text" placeholder="author" defaultValue={post.author.username} disabled required />
+                <Form.Control
+                  type="text"
+                  placeholder="author name"
+                  name="author"
+                  defaultValue={'테스트'}
+                  disabled
+                  required
+                />
                 <Form.Control.Feedback type="invalid">Please choose a username.</Form.Control.Feedback>
               </Form.Group>
             </Col>
@@ -162,7 +167,7 @@ function ViewPost() {
               <Button variant="secondary" type="submit">
                 수정
               </Button>
-              <Button variant="success" type="button" onClick={() => removePost(params.id)}>
+              <Button variant="success" type="button" onClick={() => removePost(uuid.id)}>
                 삭제
               </Button>
             </Col>
