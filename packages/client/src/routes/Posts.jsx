@@ -53,7 +53,7 @@ const Posts = () => {
                             posts.map((post, i) => (
                                 <tr key={i}>
                                     <td>{i + 1}</td>
-                                    <td><Link to={`/post/${post._id}`}>{post.title}</Link></td>
+                                    <td><Link to={`/post/${post.uuid}`}>{post.title}</Link></td>
                                     <td>{post.author.username}</td>
                                     <td>
                                         {convertDate(post.createdAt)}
