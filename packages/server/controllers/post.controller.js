@@ -35,15 +35,27 @@ export const createPosts = async (req, res) => {
 }
 export const readPosts = async (req, res) => {
     try {
-        const posts = await Post.find()
-        console.log(posts);
-        // if(posts.length) {
-        //     res.status(500).json({
-        //         status: 'fail',
-        //         message: '데이터가 존재하지 않습니다.'
-        //     })
-        // }
+        // .populte() : 마치 JOIN 연산처럼~
+        const posts = await Post.find().populate('author', 'username').sort({createdAt: -1})
         res.status(201).json(posts)
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ 
+            status: 'fail', 
+            message: '데이터가 없거나 로드하는데 에러가 발생했습니다.' 
+        })
+    }
+}
+export const readPost = async (req, res) => {
+    try {
+        // .populte() : 마치 JOIN 연산처럼~
+        const post = await Post.findById(req.params.id).populate('author', 'username')
+        if (!post) {
+            return res.status(401).json({
+                message: '데이터가 존재하지 않습니다.'
+            })
+        }
+        res.status(201).json(post)
     } catch (err) {
         console.error(err.message);
         res.status(500).json({ 
@@ -55,6 +67,23 @@ export const readPosts = async (req, res) => {
 // export const updatePosts = () => {
 
 // }
-// export const deletePosts = () => {
-
-// }
+export const removePost = async (req, res) => {
+    console.log(req.method)
+    try {
+        const post = await Post.deleteOne({_id: req.params.id})
+        if (!post) {
+            return res.status(401).json({
+                message: '데이터가 존재하지 않습니다.'
+            })
+        }
+        res.status(201).json({
+            message: '글 삭제 성공'
+        })
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ 
+            status: 'fail', 
+            message: '데이터가 없거나 로드하는데 에러가 발생했습니다.' 
+        })
+    }
+}
