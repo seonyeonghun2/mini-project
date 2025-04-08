@@ -6,6 +6,7 @@ import SignIn from './routes/SignIn'
 import SignUp from './routes/SignUp'
 import Posts from './routes/Posts'
 import AddPost from './routes/AddPost'
+import ViewPost from './routes/ViewPost'
 const App = () => {
   return (
     <>
@@ -14,6 +15,7 @@ const App = () => {
           <Route path='about' element={<About />} />
           <Route path='signup' element={<SignUp />} />
           <Route path='signin' element={<SignIn />} />
+          <Route path='post/:id' element={<ViewPost />} />
           <Route path='posts' element={<Posts />} />
         </Route>
         <Route path='/addPost' element={<AddPost />} />
